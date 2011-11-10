@@ -27,15 +27,17 @@ mtsGLUTManipulator::mtsGLUTManipulator( const std::string& name,
                       const std::vector<std::string>& geomfiles,
                       const vctFrame4x4<double>& Rtw0,
                       const std::string& robotfn,
-                      const vctDynamicVector<double>& qinit,
+                      const vctDoubleVec& qinit,
                       const std::string& basefile,
                       bool rotateX90) :
     mtsTaskPeriodic(name, period),
     manipulator(geomfiles, Rtw0, robotfn, qinit, basefile, rotateX90),
+    qin(qinit.size()),
+    qout(qinit.size()),
     input(0), output(0), ctl(0),
     cpumask(cpumask), priority(priority)
 {
-    Initialize();
+    Initialize(qinit);
 }
 
 mtsGLUTManipulator::mtsGLUTManipulator( const std::string& name,
@@ -45,19 +47,23 @@ mtsGLUTManipulator::mtsGLUTManipulator( const std::string& name,
                       const std::vector<std::string>& geomfiles,
                       const vctFrm3& Rtw0,
                       const std::string& robotfn,
-                      const vctDynamicVector<double>& qinit,
+                      const vctDoubleVec& qinit,
                       const std::string& basefile,
                       bool rotateX90) :
     mtsTaskPeriodic(name, period),
     manipulator(geomfiles, Rtw0, robotfn, qinit, basefile, rotateX90),
+    qin(qinit.size()),
+    qout(qinit.size()),
     input(0), output(0), ctl(0),
     cpumask(cpumask), priority(priority)
 {
-    Initialize();
+    Initialize(qinit);
 }
 
-void mtsGLUTManipulator::Initialize(void)
+void mtsGLUTManipulator::Initialize(const vctDoubleVec &qinit)
 {
+    qin.SetGoal(qinit);
+    qout.SetPosition(qinit);
     input = AddInterfaceProvided( "Input" );
     if (input) {
         StateTable.AddData( qin, "PositionJointInput" );

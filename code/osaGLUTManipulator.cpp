@@ -22,9 +22,10 @@ http://www.cisst.org/cisst/license.txt.
 osaGLUTManipulator::osaGLUTManipulator(const std::vector<std::string>& geomfiles,
                       const vctFrame4x4<double>& Rtw0,
                       const std::string& robotfn,
-                      const vctDynamicVector<double>& qinit,
+                      const vctDoubleVec& qinit,
                       const std::string& basefile,
                       bool rotateX90) :
+  q(qinit),
   robManipulator(robotfn, Rtw0),
   base(0)
 {
@@ -34,11 +35,12 @@ osaGLUTManipulator::osaGLUTManipulator(const std::vector<std::string>& geomfiles
 osaGLUTManipulator::osaGLUTManipulator(const std::vector<std::string>& geomfiles,
                       const vctFrm3& Rtw0,
                       const std::string& robotfn,
-                      const vctDynamicVector<double>& qinit,
+                      const vctDoubleVec& qinit,
                       const std::string& basefile,
                       bool rotateX90) :
   robManipulator(robotfn, 
                  vctFrame4x4<double>(Rtw0.Rotation(), Rtw0.Translation())),
+  q(qinit),
   base(0)
 {
     Initialize(geomfiles, basefile, rotateX90);
@@ -62,13 +64,13 @@ void osaGLUTManipulator::Initialize(const std::vector<std::string>& geomfiles,
    }
 }
 
-bool osaGLUTManipulator::GetPositions(vctDynamicVector<double>& q) const
+bool osaGLUTManipulator::GetPositions(vctDoubleVec& q) const
 {
     q = this->q; 
     return true;
 }
 
-bool osaGLUTManipulator::SetPositions(const vctDynamicVector<double>& q)
+bool osaGLUTManipulator::SetPositions(const vctDoubleVec& q)
 { 
     // Ensure one joint value per link
     if (q.size() != links.size()) {

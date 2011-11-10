@@ -3,7 +3,7 @@
   Author(s): Simon Leonard
   Created on: Nov 11 2009 
 
-  (C) Copyright 2009-2011 Johns Hopkins University (JHU), All Rights Reserved.                                                    
+  (C) Copyright 2009-2011 Johns Hopkins University (JHU), All Rights Reserved.
 
 --- begin cisst license - do not edit ---
 
@@ -23,8 +23,6 @@ http://www.cisst.org/cisst/license.txt.
 #include <cisstVector/vctMatrixRotation3.h>
 #include <cisstVector/vctFrame4x4.h>
 
-//#include <sawGLUTSimulatorExport.h>
-
 //! Base class for geometry
 /**
    devGeometry defines the interface for geometries. The primary purpose of this
@@ -33,7 +31,7 @@ http://www.cisst.org/cisst/license.txt.
    vctFrame4x4 and that is used to store the position and orientation of the 
    geometry's coordinate frame.
 */
-class /*CISST_EXPORT*/ osaGeometry {
+class osaGeometry {
 
  public:
   

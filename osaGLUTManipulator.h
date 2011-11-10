@@ -17,6 +17,7 @@ http://www.cisst.org/cisst/license.txt.
 #ifndef _osaGLUTManipulator_h
 #define _osaGLUTManipulator_h
 
+#include <cisstVector/vctDynamicVectorTypes.h>
 #include <cisstRobot/robManipulator.h>
 
 #include <sawGLUTSimulator/sawGLUTSimulatorExport.h>
@@ -28,7 +29,7 @@ class CISST_EXPORT osaGLUTManipulator : public robManipulator {
  protected:
 
   //! Store the current joints values
-  vctDynamicVector<double> q;
+  vctDoubleVec q;
 
   osaMeshTriangular* base;
   std::vector< osaMeshTriangular* > meshes;
@@ -43,13 +44,13 @@ class CISST_EXPORT osaGLUTManipulator : public robManipulator {
      \param geomfiles A vector of 3D model file names
      \param Rtw0 The offset transformation of the robot base
      \param robotfn The file with the kinematics and dynamics parameters
-     \param qinit The initial joint angles (NOT USED)
+     \param qinit The initial joint angles
      \param basefile The file name of the base 3D model
   */
   osaGLUTManipulator( const std::vector<std::string>& geomfiles,
                       const vctFrame4x4<double>& Rtw0,
                       const std::string& robotfn,
-                      const vctDynamicVector<double>& qinit,
+                      const vctDoubleVec& qinit,
                       const std::string& basefile,
                       bool rotateX90 = false );
 
@@ -61,13 +62,13 @@ class CISST_EXPORT osaGLUTManipulator : public robManipulator {
      \param geomfiles A vector of 3D model file names
      \param Rtw0 The offset transformation of the robot base
      \param robotfn The file with the kinematics and dynamics parameters
-     \param qinit The initial joint angles (NOT USED)
+     \param qinit The initial joint angles
      \param basefile The file name of the base 3D model
   */
   osaGLUTManipulator( const std::vector<std::string>& geomfiles,
                       const vctFrm3& Rtw0,
                       const std::string& robotfn,
-                      const vctDynamicVector<double>& qinit,
+                      const vctDoubleVec& qinit,
                       const std::string& basefile,
                       bool rotateX90 = false );
 
@@ -82,7 +83,7 @@ class CISST_EXPORT osaGLUTManipulator : public robManipulator {
      \param q[in] A vector of joints positions
      \return true if successfull. false otherwise.
   */
-  virtual bool GetPositions(vctDynamicVector<double>& q) const;
+  virtual bool GetPositions(vctDoubleVec& q) const;
 
   //! Set the joint position
   /**
@@ -90,7 +91,7 @@ class CISST_EXPORT osaGLUTManipulator : public robManipulator {
      \param q A vector of joint positions
      \return true if successfull. false otherwise.
   */
-  virtual bool SetPositions(const vctDynamicVector<double>& q);
+  virtual bool SetPositions(const vctDoubleVec& q);
 
 };
 

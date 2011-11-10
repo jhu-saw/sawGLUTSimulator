@@ -19,7 +19,7 @@ http://www.cisst.org/cisst/license.txt.
 
 #include "osaGeometry.h"
 
-class /*CISST_EXPORT*/ osaMeshTriangular : public osaGeometry {
+class osaMeshTriangular : public osaGeometry {
 
  protected:
  public:

@@ -32,7 +32,7 @@ class CISST_EXPORT mtsGLUTManipulator : public mtsTaskPeriodic {
 
  private:
 
-  void Initialize(void);
+  void Initialize(const vctDoubleVec & qinit);
 
   osaGLUTManipulator manipulator;
 
@@ -59,7 +59,7 @@ class CISST_EXPORT mtsGLUTManipulator : public mtsTaskPeriodic {
      \param geomfiles A vector of 3D model file names
      \param Rtw0 The offset transformation of the robot base
      \param robotfn The file with the kinematics and dynamics parameters
-     \param qinit The initial joint angles (NOT USED)
+     \param qinit The initial joint angles
      \param basefile The file name of the base 3D model
   */
   mtsGLUTManipulator( const std::string& name,
@@ -69,7 +69,7 @@ class CISST_EXPORT mtsGLUTManipulator : public mtsTaskPeriodic {
                       const std::vector<std::string>& geomfiles,
                       const vctFrame4x4<double>& Rtw0,
                       const std::string& robotfn,
-                      const vctDynamicVector<double>& qinit,
+                      const vctDoubleVec& qinit,
                       const std::string& basefile,
                       bool rotateX90 = false );
 
@@ -80,7 +80,7 @@ class CISST_EXPORT mtsGLUTManipulator : public mtsTaskPeriodic {
                       const std::vector<std::string>& geomfiles,
                       const vctFrm3& Rtw0,
                       const std::string& robotfn,
-                      const vctDynamicVector<double>& qinit,
+                      const vctDoubleVec& qinit,
                       const std::string& basefile,
                       bool rotateX90 = false );
 

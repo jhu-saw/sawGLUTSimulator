@@ -19,6 +19,8 @@ http://www.cisst.org/cisst/license.txt.
 
 #include <sawGLUTSimulator/mtsGLUTManipulator.h>
 
+CMN_IMPLEMENT_SERVICES_DERIVED(mtsGLUTManipulator, mtsTaskPeriodic);
+
 // main constructor
 mtsGLUTManipulator::mtsGLUTManipulator( const std::string& name,
                       double period,
@@ -70,7 +72,8 @@ void mtsGLUTManipulator::Initialize(const vctDoubleVec &qinit)
         input->AddCommandWriteState( StateTable, qin, "SetPositionJoint" );
     }
     else {
-        CMN_LOG_RUN_ERROR << "Failed to create interface Input for " << GetName() << std::endl;
+        CMN_LOG_CLASS_RUN_ERROR << "Failed to create interface Input for " 
+                                << GetName() << std::endl;
     }
 
     output = AddInterfaceProvided( "Output" );
@@ -81,7 +84,8 @@ void mtsGLUTManipulator::Initialize(const vctDoubleVec &qinit)
         output->AddCommandReadState( StateTable, qout,  "GetPositionJoint" );
     }
     else {
-        CMN_LOG_RUN_ERROR << "Failed to create interface Output for " << GetName() << std::endl;
+        CMN_LOG_CLASS_RUN_ERROR << "Failed to create interface Output for " 
+                                << GetName() << std::endl;
     }
 }
 
@@ -90,10 +94,10 @@ void mtsGLUTManipulator::Run()
     ProcessQueuedCommands();
 
     if (!manipulator.SetPositions(qin.Goal()))
-        CMN_LOG_RUN_ERROR << "Failed to get position for " << GetName() << std::endl;
+        CMN_LOG_CLASS_RUN_ERROR << "Failed to get position for " << GetName() << std::endl;
 
     if (!manipulator.GetPositions(qout.Position()))
-        CMN_LOG_RUN_ERROR << "Failed to get position for " << GetName() << std::endl;
+        CMN_LOG_CLASS_RUN_ERROR << "Failed to get position for " << GetName() << std::endl;
 
 #if 0  // PK TODO
     vctFrame4x4<double> Rt4x4 = manipulator.ForwardKinematics(qin.Goal());

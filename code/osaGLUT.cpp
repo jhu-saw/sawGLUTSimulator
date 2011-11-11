@@ -15,9 +15,16 @@ http://www.cisst.org/cisst/license.txt.
 */
 
 #include <cisstCommon/cmnConstants.h>
+#include <cisstCommon/cmnPortability.h>
 #include <cisstOSAbstraction/osaSleep.h>
-#include <sawGLUTSimulator/osaGLUT.h>
 
+#if (CISST_OS == CISST_DARWIN)
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
+
+#include <sawGLUTSimulator/osaGLUT.h>
 #include "osaGeometry.h"
 #include "osaMeshTriangular.h"
 
@@ -154,6 +161,11 @@ void osaGLUT::Draw(){
 void osaGLUT::Register( const osaGeometry* geom ){  
   if( glut != NULL && geom != NULL )
     glut->geoms.push_back( geom );
+}
+
+void osaGLUT::StartMainLoop(void)
+{
+  glutMainLoop(); // blocking call
 }
 
 osaGeometry* osaGLUT::LoadOBJ( const std::string& filename ){

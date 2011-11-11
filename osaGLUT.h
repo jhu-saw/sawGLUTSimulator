@@ -18,15 +18,8 @@ http://www.cisst.org/cisst/license.txt.
 #define _osaGLUT_h
 
 #include <stdlib.h>
-#include <cisstCommon/cmnPortability.h>
-#include <cisstVector/vctFixedSizeVectorTypes.h>
-
-#if (CISST_OS == CISST_DARWIN)
-#include <GLUT/glut.h>
-#else
-#include <GL/glut.h>
-#endif
 #include <vector>
+#include <cisstVector/vctFixedSizeVectorTypes.h>
 
 #include <sawGLUTSimulator/sawGLUTSimulatorExport.h>
 
@@ -63,6 +56,9 @@ class CISST_EXPORT osaGLUT {
   
   //! 
   static void Register( const osaGeometry* geom );
+
+  //! Calls  glutMainLoop (blocking call)
+  static void StartMainLoop(void);
 
   //! Draw everything
   void Draw();

@@ -28,7 +28,9 @@ http://www.cisst.org/cisst/license.txt.
 
 class osaMeshTriangular;
 
-class CISST_EXPORT mtsGLUTManipulator : public mtsTaskPeriodic {
+class CISST_EXPORT mtsGLUTManipulator : public mtsTaskPeriodic
+{
+  CMN_DECLARE_SERVICES(CMN_NO_DYNAMIC_CREATION, CMN_LOG_ALLOW_DEFAULT)
 
  private:
 
@@ -93,5 +95,7 @@ class CISST_EXPORT mtsGLUTManipulator : public mtsTaskPeriodic {
   void Cleanup(){}
 
 };
+
+CMN_DECLARE_SERVICES_INSTANTIATION(mtsGLUTManipulator);
 
 #endif

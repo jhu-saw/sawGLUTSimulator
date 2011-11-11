@@ -24,8 +24,8 @@ http://www.cisst.org/cisst/license.txt.
 
 class osaMeshTriangular;
 
-class CISST_EXPORT osaGLUTManipulator : public robManipulator {
-
+class CISST_EXPORT osaGLUTManipulator : public robManipulator
+{
  protected:
 
   //! Store the current joints values

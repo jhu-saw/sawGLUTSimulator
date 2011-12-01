@@ -36,7 +36,7 @@ if(cisst_FOUND_AS_REQUIRED AND OPENGL_FOUND AND GLUT_FOUND)
     osaMeshTriangular.h
     ../osaGLUT.h
     ../osaGLUTManipulator.h
-    ../mtsGlutManipulator.h
+    ../mtsGLUTManipulator.h
     ../sawGLUTSimulatorExport.h
     )
     

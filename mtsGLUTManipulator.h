@@ -58,6 +58,8 @@ class CISST_EXPORT mtsGLUTManipulator : public mtsTaskPeriodic
      manipulators (bodies and joints) for the engine.
      \param name The name of the component
      \param period The period of the task
+     \param mask The CPU mask (not used)
+     \param priority The task priority (not used)
      \param geomfiles A vector of 3D model file names
      \param Rtw0 The offset transformation of the robot base
      \param robotfn The file with the kinematics and dynamics parameters
@@ -67,7 +69,7 @@ class CISST_EXPORT mtsGLUTManipulator : public mtsTaskPeriodic
   mtsGLUTManipulator( const std::string& name,
                       double period,
                       osaCPUMask mask,
-                      int priority,
+                      int _priority,
                       const std::vector<std::string>& geomfiles,
                       const vctFrame4x4<double>& Rtw0,
                       const std::string& robotfn,
@@ -78,7 +80,7 @@ class CISST_EXPORT mtsGLUTManipulator : public mtsTaskPeriodic
   mtsGLUTManipulator( const std::string& name,
                       double period,
                       osaCPUMask mask,
-                      int priority,
+                      int _priority,
                       const std::vector<std::string>& geomfiles,
                       const vctFrm3& Rtw0,
                       const std::string& robotfn,

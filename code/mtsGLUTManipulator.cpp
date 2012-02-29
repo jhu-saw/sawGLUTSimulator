@@ -25,7 +25,7 @@ CMN_IMPLEMENT_SERVICES_DERIVED(mtsGLUTManipulator, mtsTaskPeriodic);
 mtsGLUTManipulator::mtsGLUTManipulator( const std::string& name,
                       double period,
                       osaCPUMask mask,
-                      int priority,
+                      int _priority,
                       const std::vector<std::string>& geomfiles,
                       const vctFrame4x4<double>& Rtw0,
                       const std::string& robotfn,
@@ -34,10 +34,10 @@ mtsGLUTManipulator::mtsGLUTManipulator( const std::string& name,
                       bool rotateX90) :
     mtsTaskPeriodic(name, period),
     manipulator(geomfiles, Rtw0, robotfn, qinit, basefile, rotateX90),
-    qin(qinit.size()),
     qout(qinit.size()),
+    qin(qinit.size()),
     input(0), output(0), ctl(0),
-    cpumask(cpumask), priority(priority)
+    cpumask(mask), priority(_priority)
 {
     Initialize(qinit);
 }
@@ -45,7 +45,7 @@ mtsGLUTManipulator::mtsGLUTManipulator( const std::string& name,
 mtsGLUTManipulator::mtsGLUTManipulator( const std::string& name,
                       double period,
                       osaCPUMask mask,
-                      int priority,
+                      int _priority,
                       const std::vector<std::string>& geomfiles,
                       const vctFrm3& Rtw0,
                       const std::string& robotfn,
@@ -54,10 +54,10 @@ mtsGLUTManipulator::mtsGLUTManipulator( const std::string& name,
                       bool rotateX90) :
     mtsTaskPeriodic(name, period),
     manipulator(geomfiles, Rtw0, robotfn, qinit, basefile, rotateX90),
-    qin(qinit.size()),
     qout(qinit.size()),
+    qin(qinit.size()),
     input(0), output(0), ctl(0),
-    cpumask(cpumask), priority(priority)
+    cpumask(mask), priority(_priority)
 {
     Initialize(qinit);
 }
@@ -99,9 +99,6 @@ void mtsGLUTManipulator::Run()
     if (!manipulator.GetPositions(qout.Position()))
         CMN_LOG_CLASS_RUN_ERROR << "Failed to get position for " << GetName() << std::endl;
 
-#if 0  // PK TODO
     vctFrame4x4<double> Rt4x4 = manipulator.ForwardKinematics(qin.Goal());
-    vctQuaternionRotation3<double> q(Rt4x4.Rotation(), VCT_NORMALIZE);
-    Rtout.Position() = vctFrm3( q, Rt4x4.Translation() );
-#endif
+    Rtout.Position().From(Rt4x4);
 }

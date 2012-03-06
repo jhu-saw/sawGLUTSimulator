@@ -13,6 +13,7 @@ http://www.cisst.org/cisst/license.txt.
 --- end cisst license ---
 */
 
+#include <cisstCommon/cmnPath.h>
 #include <cisstMultiTask/mtsComponent.h>
 #include <cisstMultiTask/mtsManagerLocal.h>
 #include <cisstMultiTask/mtsInterfaceProvided.h>
@@ -34,7 +35,7 @@ public:
 };
 
 SetPoints::SetPoints(const std::string &name, unsigned int numAxes) : mtsComponent(name),
-                    startPos(numAxes), endPos(numAxes)
+                     startPos(numAxes), endPos(numAxes)
 {
   mtsInterfaceProvided *prov = AddInterfaceProvided("Control");
   if (prov)
@@ -89,19 +90,22 @@ int main( int argc, char** argv ){
 #if 0
   vctDynamicVector<double> qdmax( 7, 0.1 );
   vctDynamicVector<double> qddmax( 7, 0.05 );
-  devQLQRn trajectory( "trajectory", 
-                       0.01, 
+  devQLQRn trajectory( "trajectory",
+                       0.01,
                        devTrajectory::ENABLED,
                        OSA_CPUANY,
                        devTrajectory::QUEUE,
                        devTrajectory::POSITION,
-                       qinit, 
+                       qinit,
                        qdmax,
                        qddmax );
   taskManager->AddComponent(&trajectory);
 #endif
 
-  std::string path(CISST_SOURCE_ROOT"/etc/cisstRobot/WAM/");
+  cmnPath path;
+  path.AddRelativeToCisstShare("/models/WAM");
+  std::string fname = path.Find("wam7.rob", cmnPath::READ);
+
   std::vector<std::string> links;
   links.push_back( path + "l1.obj" );
   links.push_back( path + "l2.obj" );
@@ -112,13 +116,13 @@ int main( int argc, char** argv ){
   links.push_back( path + "l7.obj" );
 
 
-  mtsGLUTManipulator WAM("WAM", 
+  mtsGLUTManipulator WAM("WAM",
                          0.03,
                          OSA_CPUANY,
                          0,
                          links,
                          vctFrame4x4<double>(),
-                         path + "wam7.rob",
+                         fname,
                          qinit,
                          path + "l0.obj",
                          true );
@@ -127,7 +131,7 @@ int main( int argc, char** argv ){
   if (!taskManager->Connect( keyboard.GetName(),  "next",
                              setpoints.GetName(), "Control" ) )
     {
-      std::cerr << "Connect failed: " 
+      std::cerr << "Connect failed: "
                 << keyboard.GetName() << ":next"
                 << " - "
                 << setpoints.GetName() << ":Control"
@@ -139,7 +143,7 @@ int main( int argc, char** argv ){
   if (!taskManager->Connect( trajectory.GetName(), devTrajectory::Input,
                              setpoints.GetName(),  devSetPoints::OutputRn ) )
     {
-      std::cerr << "Connect failed: " 
+      std::cerr << "Connect failed: "
                 << trajectory.GetName() << ":" << devTrajectory::Input
                 << " - "
                 << setpoints.GetName() << ":" << devManipulator::Input
@@ -150,7 +154,7 @@ int main( int argc, char** argv ){
   if (!taskManager->Connect( trajectory.GetName(), devTrajectory::Output,
                              WAM.GetName(),    devManipulator::Input ))
     {
-      std::cerr << "Connect failed: " 
+      std::cerr << "Connect failed: "
                 << trajectory.GetName() << ":" << "Output"
                 << " - "
                 << WAM.GetName() << ":" << devManipulator::Input
@@ -161,7 +165,7 @@ int main( int argc, char** argv ){
   if (!taskManager->Connect( setpoints.GetName(), "Output",
                              WAM.GetName(),    "Input" ))
     {
-      std::cerr << "Connect failed: " 
+      std::cerr << "Connect failed: "
                 << setpoints.GetName() << ":Output"
                 << " - "
                 << WAM.GetName() << ":Input"

@@ -102,11 +102,14 @@ int main( int argc, char** argv ){
   taskManager->AddComponent(&trajectory);
 #endif
 
-  cmnPath path;
-  path.AddRelativeToCisstShare("/models/WAM");
-  std::string fname = path.Find("wam7.rob", cmnPath::READ);
-
+  std::string path;
+  if (!cmnPath::GetCisstShare(path)) {
+    CMN_LOG_RUN_ERROR << "Could not find cisst share directory -- is CISST_ROOT defined?" << std::endl;
+    return -1;
+  }
+  path.append("/models/WAM/");
   std::vector<std::string> links;
+
   links.push_back( path + "l1.obj" );
   links.push_back( path + "l2.obj" );
   links.push_back( path + "l3.obj" );
@@ -115,14 +118,13 @@ int main( int argc, char** argv ){
   links.push_back( path + "l6.obj" );
   links.push_back( path + "l7.obj" );
 
-
   mtsGLUTManipulator WAM("WAM",
                          0.03,
                          OSA_CPUANY,
                          0,
                          links,
                          vctFrame4x4<double>(),
-                         fname,
+                         path + "wam7.rob",
                          qinit,
                          path + "l0.obj",
                          true );

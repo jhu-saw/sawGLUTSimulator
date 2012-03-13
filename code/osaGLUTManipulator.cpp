@@ -25,8 +25,8 @@ osaGLUTManipulator::osaGLUTManipulator(const std::vector<std::string>& geomfiles
                       const vctDoubleVec& qinit,
                       const std::string& basefile,
                       bool rotateX90) :
-  q(qinit),
   robManipulator(robotfn, Rtw0),
+  q(qinit),
   base(0)
 {
     Initialize(geomfiles, basefile, rotateX90);

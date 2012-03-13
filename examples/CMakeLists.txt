@@ -1,14 +1,14 @@
 #
 # $Id: CMakeLists.txt 3034 2011-10-09 01:53:36Z adeguet1 $
 #
-# (C) Copyright 2009-2011 Johns Hopkins University (JHU), All Rights Reserved.
+# (C) Copyright 2009-2012 Johns Hopkins University (JHU), All Rights Reserved.
 #
 # --- begin cisst license - do not edit ---
-# 
+#
 # This software is provided "as is" under an open source license, with
 # no warranty.  The complete license can be found in license.txt and
 # http://www.cisst.org/cisst/license.txt.
-# 
+#
 # --- end cisst license ---
 
 # List cisst libraries needed
@@ -28,8 +28,8 @@ if (cisst_FOUND_AS_REQUIRED)
   include (${CISST_USE_FILE})
 
   # sawGLUTSimulator has been compiled within cisst, we should find it automatically
-  find_package (sawGLUTSimulator REQUIRED HINTS "${cisst_saw_BINARY_DIR}/saw/components")
-  find_package (sawKeyboard      REQUIRED HINTS "${cisst_saw_BINARY_DIR}/saw/components")
+  cisst_find_saw_component (sawGLUTSimulator REQUIRED)
+  cisst_find_saw_component (sawKeyboard      REQUIRED)
 
   if (sawGLUTSimulator_FOUND AND sawKeyboard_FOUND)
 

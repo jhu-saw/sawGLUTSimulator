@@ -72,7 +72,7 @@ class CISST_EXPORT osaGLUTManipulator : public robManipulator
                       const std::string& basefile,
                       bool rotateX90 = false );
 
-  ~osaGLUTManipulator(){}
+  ~osaGLUTManipulator();
 
   void Initialize(const std::vector<std::string>& geomfiles,
                   const std::string& basefile, bool rotateX90);

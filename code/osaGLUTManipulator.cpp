@@ -46,6 +46,8 @@ osaGLUTManipulator::osaGLUTManipulator(const std::vector<std::string>& geomfiles
     Initialize(geomfiles, basefile, rotateX90);
 }
 
+osaGLUTManipulator::~osaGLUTManipulator() {}
+
 void osaGLUTManipulator::Initialize(const std::vector<std::string>& geomfiles,
                                     const std::string& basefile, bool rotateX90)
 {
